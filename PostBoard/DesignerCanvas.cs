@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Xml;
+using Microsoft.Win32;
 
 namespace PostBoard
 {
@@ -56,16 +57,34 @@ namespace PostBoard
             }
         }
 
+        private string SelectImageFromDisk()
+        {
+            string selectedImageFile = string.Empty;
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                        "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                selectedImageFile = op.FileName;
+            }
+            return selectedImageFile;
+        }
         
 
         private void CreatePostAt(Point position)
         {
             DesignerItem newItem = null;
             //FrameworkElement content = new RichTextBox();
+            string imageFile = SelectImageFromDisk();
+            if (imageFile == string.Empty)
+                return; 
+
             Image content = new Image();
             BitmapImage bmImage = new BitmapImage();
             bmImage.BeginInit();
-            bmImage.UriSource = new Uri(@"C:\Temp\Koala.jpg", UriKind.Absolute);
+            bmImage.UriSource = new Uri(imageFile, UriKind.Absolute);
             bmImage.EndInit();
             content.Source = bmImage;
 
