@@ -43,7 +43,8 @@ namespace PostBoard
             switch (e.ChangedButton)
             {
                 case MouseButton.Right:
-                    CreatePostAt(e.GetPosition(this));
+                    //CreatePostAt(e.GetPosition(this));
+                    CreateTextPostAt(e.GetPosition(this));
                     e.Handled = true;
                     break;
                 case MouseButton.Left:
@@ -70,6 +71,38 @@ namespace PostBoard
                 selectedImageFile = op.FileName;
             }
             return selectedImageFile;
+        }
+
+        private void CreateTextPostAt(Point position)
+        {
+            DesignerItem newItem = null;
+
+            RichTextBox content = new RichTextBox();
+            content.Margin = new Thickness(2, 10, 2, 2);
+                        
+            if (content != null)
+            {
+                newItem = new DesignerItem();
+                newItem.Content = content;
+
+                if (content.MinHeight != 0 && content.MinWidth != 0)
+                {
+                    newItem.Width = content.MinWidth * 2; ;
+                    newItem.Height = content.MinHeight * 2;
+                }
+                else
+                {
+                    newItem.Width = 65;
+                    newItem.Height = 65;
+                }
+                DesignerCanvas.SetLeft(newItem, Math.Max(0, position.X - newItem.Width / 2));
+                DesignerCanvas.SetTop(newItem, Math.Max(0, position.Y - newItem.Height / 2));
+                this.Children.Add(newItem);
+
+                this.DeselectAll();
+                newItem.IsSelected = true;
+            }
+
         }
         
 
