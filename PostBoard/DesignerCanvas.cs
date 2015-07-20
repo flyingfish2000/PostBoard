@@ -78,7 +78,7 @@ namespace PostBoard
         {
             DesignerItem newItem = null;
 
-            RichTextBox content = new RichTextBox();
+            UserControl content = new PostEditor();
             content.Margin = new Thickness(2, 10, 2, 2);
                                     
             if (content != null)
@@ -93,8 +93,8 @@ namespace PostBoard
                 }
                 else
                 {
-                    newItem.Width = 65;
-                    newItem.Height = 65;
+                    newItem.Width = 250;
+                    newItem.Height = 285;
                 }
                 DesignerCanvas.SetLeft(newItem, Math.Max(0, position.X - newItem.Width / 2));
                 DesignerCanvas.SetTop(newItem, Math.Max(0, position.Y - newItem.Height / 2));
