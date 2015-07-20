@@ -79,7 +79,7 @@ namespace PostBoard
 
             RichTextBox content = new RichTextBox();
             content.Margin = new Thickness(2, 10, 2, 2);
-                        
+                                    
             if (content != null)
             {
                 newItem = new DesignerItem();
