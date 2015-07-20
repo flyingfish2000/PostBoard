@@ -45,6 +45,7 @@ namespace PostBoard
         {
             base.OnPreviewMouseDown(e);
             DesignerCanvas designer = VisualTreeHelper.GetParent(this) as DesignerCanvas;
+            e.Handled = false;
 
             if (designer != null)
             {
@@ -54,15 +55,22 @@ namespace PostBoard
                 }
                 else
                 {
-                    if (!this.IsSelected)
+                    if (e.ChangedButton == MouseButton.Right)
                     {
-                        designer.DeselectAll();
-                        this.IsSelected = true;
+                        e.Handled = true;
+                    }
+                    else
+                    {
+                        if (!this.IsSelected)
+                        {
+                            designer.DeselectAll();
+                            this.IsSelected = true;
+                        }
                     }
                 }
             }
 
-            e.Handled = false;
+            
         }
 
         private void DesignerItem_Loaded(object sender, RoutedEventArgs e)

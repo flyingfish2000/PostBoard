@@ -55,6 +55,7 @@
     </ApplicationDefinition>
     <Compile Include="Adorners\ResizeAdorner.cs" />
     <Compile Include="Adorners\ResizeChrome.cs" />
+    <Compile Include="Adorners\RubberbandAdorner.cs" />
     <Compile Include="ResizeDecorator.cs" />
     <Compile Include="ResizeThumb.cs" />
     <Compile Include="RotateThumb.cs" />

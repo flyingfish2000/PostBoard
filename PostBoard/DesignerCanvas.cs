@@ -10,6 +10,7 @@ using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using Microsoft.Win32;
+using PostBoard.Adorners;
 
 namespace PostBoard
 {
@@ -128,11 +129,11 @@ namespace PostBoard
                 AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
                 if (adornerLayer != null)
                 {
-                    //RubberbandAdorner adorner = new RubberbandAdorner(this, this.dragStartPoint);
-                   //if (adorner != null)
-                    //{
-                    //    adornerLayer.Add(adorner);
-                    //}
+                    RubberbandAdorner adorner = new RubberbandAdorner(this, this.dragStartPoint);
+                    if (adorner != null)
+                    {
+                        adornerLayer.Add(adorner);
+                    }
                 }
 
                 e.Handled = true;
