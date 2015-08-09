@@ -30,6 +30,93 @@ namespace PostBoard
             }
         }
 
+        public void DeletePost(PostEditor postEditor)
+        {
+            DesignerItem toBeDeleted = null;
+            foreach(DesignerItem item in this.Children.OfType<DesignerItem>()){
+                if (item.Content == postEditor)
+                {
+                    toBeDeleted = item;
+                }
+            }
+
+            this.Children.Remove(toBeDeleted);
+        }
+
+        public void SaveAllPosts(string workingFolder, XmlDocument xmlDoc, XmlElement rootEle)
+        {
+            int counter = 0;
+            foreach (DesignerItem item in this.Children.OfType<DesignerItem>())
+            {
+                double width = item.Width;
+                double height = item.Height;
+                double top = (double)item.GetValue(Canvas.TopProperty);
+                double left = (double)item.GetValue(Canvas.LeftProperty);
+
+                XmlElement postEle = xmlDoc.CreateElement("Post");
+                XmlAttribute widthAttr = CreateAttribute(xmlDoc, width, "width");
+                postEle.Attributes.Append(widthAttr);
+
+                XmlAttribute heightAttr = CreateAttribute(xmlDoc, height, "height");
+                postEle.Attributes.Append(heightAttr);
+
+                XmlAttribute topAttr = CreateAttribute(xmlDoc, top, "top");
+                postEle.Attributes.Append(topAttr);
+
+                XmlAttribute leftAttr = CreateAttribute(xmlDoc, left, "left");
+                postEle.Attributes.Append(leftAttr);
+
+                XmlAttribute timeAttr = xmlDoc.CreateAttribute("time");
+                timeAttr.Value = item.CreationTime.ToString();
+                postEle.Attributes.Append(timeAttr);
+
+                string fileName = workingFolder + "post" + counter;
+                item.Save(fileName);
+
+                XmlAttribute contentAttr = xmlDoc.CreateAttribute("content");
+                contentAttr.Value = fileName;
+                postEle.Attributes.Append(contentAttr);
+
+                rootEle.AppendChild(postEle);
+                counter++;
+            }
+        }
+
+        public void LoadAllPosts(XmlElement docEle)
+        {  
+            XmlNodeList postsEle = docEle.ChildNodes;
+            int posts = postsEle.Count;
+
+            for (int i = 0; i < posts; i++)
+            {
+                XmlElement postEle = postsEle[i] as XmlElement;
+                if (postEle != null)
+                {
+                    double top = double.Parse(postEle.GetAttribute("top"));
+                    double left = double.Parse(postEle.GetAttribute("left"));
+
+                    double width = double.Parse(postEle.GetAttribute("width"));
+                    double height = double.Parse(postEle.GetAttribute("height"));
+
+                    DateTime time = DateTime.Parse( postEle.GetAttribute("time"));
+
+                    string postFile = postEle.GetAttribute("content");
+
+                    Point location = new Point(left, top);
+
+                    CreateTextPostAt(location, width, height, time, postFile);
+
+                }
+            }
+        }
+
+        private XmlAttribute CreateAttribute(XmlDocument xmlDoc, double attrValue, string attrName)
+        {
+            XmlAttribute attr = xmlDoc.CreateAttribute(attrName);
+            attr.Value = attrValue.ToString();
+            return attr;
+        }
+
         public void DeselectAll()
         {
             foreach (DesignerItem item in this.SelectedItems)
@@ -38,16 +125,33 @@ namespace PostBoard
             }
         }
 
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            CreateTextPostAt(e.GetPosition(this));
+            e.Handled = true;
+        }
+
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            Key input = e.Key;
+            if (input == Key.Delete)
+            {
+                System.Diagnostics.Debug.WriteLine("delete pressed");
+            }
+        }
+        
+
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
             switch (e.ChangedButton)
             {
-                case MouseButton.Right:
-                    //CreatePostAt(e.GetPosition(this));
-                    CreateTextPostAt(e.GetPosition(this));
-                    e.Handled = true;
-                    break;
                 case MouseButton.Left:
                     if (e.Source == this)
                     {
@@ -85,6 +189,7 @@ namespace PostBoard
             {
                 newItem = new DesignerItem();
                 newItem.Content = content;
+                ((PostEditor)content).SetCreationTime(newItem.CreationTime);
 
                 if (content.MinHeight != 0 && content.MinWidth != 0)
                 {
@@ -102,6 +207,40 @@ namespace PostBoard
 
                 this.DeselectAll();
                 newItem.IsSelected = true;
+
+                newItem.SaveMethod = ((PostEditor)content).SavePost;
+            }
+
+        }
+
+        private void CreateTextPostAt(Point position, double width, double height, DateTime creationTime, string postFile)
+        {
+            DesignerItem newItem = null;
+
+            UserControl content = new PostEditor();
+            
+            content.Margin = new Thickness(2, 10, 2, 2);
+
+            if (content != null)
+            {
+                newItem = new DesignerItem();
+                newItem.CreationTime = creationTime;
+
+                newItem.Content = content;
+                ((PostEditor)content).SetCreationTime(newItem.CreationTime);
+                ((PostEditor)content).LoadPost(postFile);
+                
+                newItem.Width = width;
+                newItem.Height = height;
+
+                DesignerCanvas.SetLeft(newItem, position.X);
+                DesignerCanvas.SetTop(newItem, position.Y);
+                this.Children.Add(newItem);
+
+                this.DeselectAll();
+                newItem.IsSelected = true;
+
+                newItem.SaveMethod = ((PostEditor)content).SavePost;
             }
 
         }
@@ -145,6 +284,7 @@ namespace PostBoard
 
                 this.DeselectAll();
                 newItem.IsSelected = true;
+
             }
         }
 

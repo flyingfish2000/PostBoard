@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -39,7 +40,20 @@ namespace PostBoard
         public DesignerItem()
         {
             this.Loaded += new RoutedEventHandler(this.DesignerItem_Loaded);
+            this.CreationTime = DateTime.Now;
         }
+
+        public delegate void SaveDelgate(string fileName);
+
+        public SaveDelgate SaveMethod = null;
+
+        public void Save(string fileName)
+        {
+            if (SaveMethod != null)
+                SaveMethod(fileName);
+        }
+
+        public DateTime CreationTime { get; set; }
 
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
@@ -65,6 +79,9 @@ namespace PostBoard
                         {
                             designer.DeselectAll();
                             this.IsSelected = true;
+                            PostEditor content = this.Content as PostEditor;
+                            if (content != null)
+                                content.SetFocus();
                         }
                     }
                 }

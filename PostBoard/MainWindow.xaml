@@ -6,9 +6,9 @@
         Title="Post Board"
         FontFamily="SegoeUI"
         Height="850"
-        Width="1100">
+        Width="1100" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
-        <Image Source="Images\DSC_0152.JPG" />
+        <Image Source="Images\PostBoard_brown.JPG" />
         <ScrollViewer Name="DesignerScrollViewer"
                                   Background="Transparent"
                                   HorizontalScrollBarVisibility="Auto"
@@ -17,7 +17,7 @@
                                           MinHeight="800"
                                           MinWidth="1000"
                                           AllowDrop="True"
-                                          Background="Transparent">
+                                          Background="Transparent" Button.Click="OnButtonClicked">
             </s:DesignerCanvas>
         </ScrollViewer>
     </Grid>
