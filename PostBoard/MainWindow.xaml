@@ -5,6 +5,7 @@
         WindowStartupLocation="CenterScreen"
         Title="Post Board"
         FontFamily="SegoeUI"
+        WindowState="Maximized"
         Height="850"
         Width="1100" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
@@ -14,8 +15,8 @@
                                   HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Auto">
             <s:DesignerCanvas x:Name="MyDesignerCanvas"
-                                          MinHeight="800"
-                                          MinWidth="1000"
+                                          MinHeight="650"
+                                          MinWidth="850"
                                           AllowDrop="True"
                                           Background="Transparent" Button.Click="OnButtonClicked">
             </s:DesignerCanvas>
