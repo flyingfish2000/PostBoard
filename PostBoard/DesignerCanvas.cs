@@ -127,7 +127,7 @@ namespace PostBoard
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
-            CreateTextPostAt(e.GetPosition(this));
+            //CreateTextPostAt(e.GetPosition(this));
             e.Handled = true;
         }
 
@@ -178,7 +178,7 @@ namespace PostBoard
             return selectedImageFile;
         }
 
-        private void CreateTextPostAt(Point position)
+        public void CreateTextPostAt(Point position)
         {
             DesignerItem newItem = null;
 
@@ -201,8 +201,8 @@ namespace PostBoard
                     newItem.Width = 250;
                     newItem.Height = 285;
                 }
-                DesignerCanvas.SetLeft(newItem, Math.Max(0, position.X - newItem.Width / 2));
-                DesignerCanvas.SetTop(newItem, Math.Max(0, position.Y - newItem.Height / 2));
+                DesignerCanvas.SetLeft(newItem, position.X); // Math.Max(0, position.X - newItem.Width / 2));
+                DesignerCanvas.SetTop(newItem, position.Y); // Math.Max(0, position.Y - newItem.Height / 2));
                 this.Children.Add(newItem);
 
                 this.DeselectAll();
