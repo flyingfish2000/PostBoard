@@ -9,17 +9,53 @@
         Height="850"
         Width="1100" Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
-        <Image Source="Images\PostBoard_brown.JPG" />
-        <ScrollViewer Name="DesignerScrollViewer"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Ribbon Grid.Row="0" x:Name="_ribbon"  SelectedIndex="0">
+            <Ribbon.HelpPaneContent>
+                <RibbonButton SmallImageSource="images\help.png" />
+            </Ribbon.HelpPaneContent>
+            <!-- Application Menu, located at the left-hand side (down arrow) -->
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu KeyTip="F">
+                    <RibbonApplicationMenuItem Header="Options" ImageSource="images\options.png" />
+                    <RibbonApplicationMenuItem Header="Exit" ImageSource="images\quit.png" />
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <!-- Ribbon Tab #1: Home -->
+            <RibbonTab Header="Home" KeyTip="H" >
+                <!-- Home/New notes group-->
+                <RibbonGroup x:Name="PostNoteGroup" Header="New Note">
+                    <RibbonButton Click="OnYellowNoteClicked"  LargeImageSource="images\PostIt_yellow.png" Label="Yellow" KeyTip="Y">
+                    </RibbonButton>
+
+
+                    <RibbonButton LargeImageSource="images\PostIt_blue.png" Label="Blue" KeyTip="B"/>
+                    <RibbonButton LargeImageSource="images\PostIt_green.png" Label="Green" KeyTip="G"/>
+                    <RibbonButton LargeImageSource="images\PostIt_pink.png" Label="Pink" KeyTip="P"/>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+        
+        
+            
+        <ScrollViewer Grid.Row="1" Name="DesignerScrollViewer"
                                   Background="Transparent"
                                   HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Auto">
+            <Grid>
+            <Image Source="Images\PostBoard_brown.JPG" />
             <s:DesignerCanvas x:Name="MyDesignerCanvas"
                                           MinHeight="650"
                                           MinWidth="850"
                                           AllowDrop="True"
                                           Background="Transparent" Button.Click="OnButtonClicked">
-            </s:DesignerCanvas>
+                </s:DesignerCanvas>
+            </Grid>
         </ScrollViewer>
+    
+
     </Grid>
 </Window>

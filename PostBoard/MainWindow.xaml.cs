@@ -90,5 +90,11 @@ namespace PostBoard
             string storageFile = WorkingFolder + Storage;
             LoadFromFile(storageFile);
         }
+
+        private void OnYellowNoteClicked(object sender, RoutedEventArgs e)
+        {
+            MyDesignerCanvas.CreateTextPostAt(new Point(50, 50));
+        }
+
     }
 }
