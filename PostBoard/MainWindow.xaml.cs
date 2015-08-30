@@ -96,5 +96,19 @@ namespace PostBoard
             MyDesignerCanvas.CreateTextPostAt(new Point(50, 50));
         }
 
+        private void OnBlueNoteClicked(object sender, RoutedEventArgs e)
+        {
+            MyDesignerCanvas.CreateTextPostAt(new Point(50, 50), Colors.LightSkyBlue);
+        }
+
+        private void OnGreenNoteClicked(object sender, RoutedEventArgs e)
+        {
+            MyDesignerCanvas.CreateTextPostAt(new Point(50, 50), Colors.Honeydew);
+        }
+
+        private void OnPinkNoteClicked(object sender, RoutedEventArgs e)
+        {
+            MyDesignerCanvas.CreateTextPostAt(new Point(50, 50), Colors.Pink);
+        }
     }
 }

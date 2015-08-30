@@ -62,6 +62,17 @@ namespace PostBoard
 
         }
 
+        public Color BackgroundColor
+        {
+            get
+            {
+                return ((SolidColorBrush)_postGrid.Background).Color;
+            }
+            set
+            {
+                _postGrid.Background = new SolidColorBrush(value);
+            }
+        } 
 
     }
 }

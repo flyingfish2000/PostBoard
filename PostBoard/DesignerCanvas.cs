@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Xml;
 using Microsoft.Win32;
 using PostBoard.Adorners;
+using System.Windows.Media;
 
 namespace PostBoard
 {
@@ -66,6 +67,10 @@ namespace PostBoard
                 XmlAttribute leftAttr = CreateAttribute(xmlDoc, left, "left");
                 postEle.Attributes.Append(leftAttr);
 
+                XmlAttribute colorAttr = xmlDoc.CreateAttribute("color");               
+                colorAttr.Value = ((PostEditor)item.Content).BackgroundColor.ToString();
+                postEle.Attributes.Append(colorAttr);
+
                 XmlAttribute timeAttr = xmlDoc.CreateAttribute("time");
                 timeAttr.Value = item.CreationTime.ToString();
                 postEle.Attributes.Append(timeAttr);
@@ -98,13 +103,21 @@ namespace PostBoard
                     double width = double.Parse(postEle.GetAttribute("width"));
                     double height = double.Parse(postEle.GetAttribute("height"));
 
+                    Color backgroundColor = Colors.LightYellow;
+                    if (postEle.HasAttribute("color"))
+                    {
+                        string colorAttr = postEle.GetAttribute("color");
+                        backgroundColor = (Color)ColorConverter.ConvertFromString(colorAttr);
+
+                    }
+
                     DateTime time = DateTime.Parse( postEle.GetAttribute("time"));
 
                     string postFile = postEle.GetAttribute("content");
 
                     Point location = new Point(left, top);
 
-                    CreateTextPostAt(location, width, height, time, postFile);
+                    CreateTextPostAt(location, width, height, time, postFile, backgroundColor);
 
                 }
             }
@@ -213,7 +226,43 @@ namespace PostBoard
 
         }
 
-        private void CreateTextPostAt(Point position, double width, double height, DateTime creationTime, string postFile)
+        public void CreateTextPostAt(Point position, Color postColor)
+        {
+            DesignerItem newItem = null;
+
+            UserControl content = new PostEditor();
+            content.Margin = new Thickness(2, 10, 2, 2);
+
+            if (content != null)
+            {
+                newItem = new DesignerItem();
+                newItem.Content = content;
+                ((PostEditor)content).SetCreationTime(newItem.CreationTime);
+                ((PostEditor)content).BackgroundColor = postColor;
+
+                if (content.MinHeight != 0 && content.MinWidth != 0)
+                {
+                    newItem.Width = content.MinWidth * 2; ;
+                    newItem.Height = content.MinHeight * 2;
+                }
+                else
+                {
+                    newItem.Width = 250;
+                    newItem.Height = 285;
+                }
+                DesignerCanvas.SetLeft(newItem, position.X); // Math.Max(0, position.X - newItem.Width / 2));
+                DesignerCanvas.SetTop(newItem, position.Y); // Math.Max(0, position.Y - newItem.Height / 2));
+                this.Children.Add(newItem);
+
+                this.DeselectAll();
+                newItem.IsSelected = true;
+
+                newItem.SaveMethod = ((PostEditor)content).SavePost;
+            }
+
+        }
+
+        private void CreateTextPostAt(Point position, double width, double height, DateTime creationTime, string postFile, Color background)
         {
             DesignerItem newItem = null;
 
@@ -227,6 +276,7 @@ namespace PostBoard
                 newItem.CreationTime = creationTime;
 
                 newItem.Content = content;
+                ((PostEditor)content).BackgroundColor = background;
                 ((PostEditor)content).SetCreationTime(newItem.CreationTime);
                 ((PostEditor)content).LoadPost(postFile);
                 

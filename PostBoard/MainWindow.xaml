@@ -32,9 +32,9 @@
                     </RibbonButton>
 
 
-                    <RibbonButton LargeImageSource="images\PostIt_blue.png" Label="Blue" KeyTip="B"/>
-                    <RibbonButton LargeImageSource="images\PostIt_green.png" Label="Green" KeyTip="G"/>
-                    <RibbonButton LargeImageSource="images\PostIt_pink.png" Label="Pink" KeyTip="P"/>
+                    <RibbonButton Click="OnBlueNoteClicked" LargeImageSource="images\PostIt_blue.png" Label="Blue" KeyTip="B"/>
+                    <RibbonButton Click="OnGreenNoteClicked" LargeImageSource="images\PostIt_green.png" Label="Green" KeyTip="G"/>
+                    <RibbonButton Click="OnPinkNoteClicked" LargeImageSource="images\PostIt_pink.png" Label="Pink" KeyTip="P"/>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
