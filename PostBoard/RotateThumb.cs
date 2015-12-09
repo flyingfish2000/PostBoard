@@ -44,6 +44,7 @@ namespace PostBoard
                     if (this.rotateTransform == null)
                     {
                         this.designerItem.RenderTransform = new RotateTransform(0);
+                        this.designerItem.SetValue(RenderTransformOriginProperty, new Point(0.5, 0.5));
                         this.initialAngle = 0;
                     }
                     else

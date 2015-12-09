@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -150,6 +151,17 @@
     <Resource Include="Images\PostBoard_lightbrown.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\go-next.png" />
+    <Resource Include="Images\go-previous.png" />
+    <Resource Include="Images\help.png" />
+    <Resource Include="Images\options.png" />
+    <Resource Include="Images\PostIt_blue.png" />
+    <Resource Include="Images\PostIt_green.png" />
+    <Resource Include="Images\PostIt_pink.png" />
+    <Resource Include="Images\PostIt_yellow.png" />
+    <Resource Include="Images\quit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,8 +11,14 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock x:Name="_createTimeLabel" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="this is a test" Margin="2, 2, 6, 2"/>
-        <Button x:Name="_deletePost" Grid.Row="0" HorizontalAlignment="Left" Margin="2, 2" >x</Button>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="_createTimeLabel" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Text="this is a test" Margin="2, 2, 6, 2"/>
+            <Button x:Name="_deletePost" Padding="2, 0" Grid.Column="1" HorizontalAlignment="Right" Margin="2, 2" >x</Button>
+        </Grid>
         <RichTextBox x:Name="_postEdit" Grid.Row="1" Margin="2, 2, 2, 2" Background="Transparent" FontSize="14">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
