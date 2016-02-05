@@ -207,7 +207,7 @@ namespace PostBoard
                 if (content.MinHeight != 0 && content.MinWidth != 0)
                 {
                     newItem.Width = content.MinWidth * 2; ;
-                    newItem.Height = content.MinHeight * 2;
+                    //newItem.Height = content.MinHeight * 2;
                 }
                 else
                 {
@@ -243,12 +243,12 @@ namespace PostBoard
                 if (content.MinHeight != 0 && content.MinWidth != 0)
                 {
                     newItem.Width = content.MinWidth * 2; ;
-                    newItem.Height = content.MinHeight * 2;
+                    //newItem.Height = content.MinHeight * 2;
                 }
                 else
                 {
                     newItem.Width = 250;
-                    newItem.Height = 285;
+                    //newItem.MinHeight = 285;
                 }
                 DesignerCanvas.SetLeft(newItem, position.X); // Math.Max(0, position.X - newItem.Width / 2));
                 DesignerCanvas.SetTop(newItem, position.Y); // Math.Max(0, position.Y - newItem.Height / 2));
@@ -281,7 +281,7 @@ namespace PostBoard
                 ((PostEditor)content).LoadPost(postFile);
                 
                 newItem.Width = width;
-                newItem.Height = height;
+                //newItem.Height = height;
 
                 DesignerCanvas.SetLeft(newItem, position.X);
                 DesignerCanvas.SetTop(newItem, position.Y);
