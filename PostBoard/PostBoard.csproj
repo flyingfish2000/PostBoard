@@ -75,6 +75,7 @@
     <Compile Include="Adorners\ResizeAdorner.cs" />
     <Compile Include="Adorners\ResizeChrome.cs" />
     <Compile Include="Adorners\RubberbandAdorner.cs" />
+    <Compile Include="AutoGrowPanel.cs" />
     <Compile Include="PostEditor.xaml.cs">
       <DependentUpon>PostEditor.xaml</DependentUpon>
     </Compile>
